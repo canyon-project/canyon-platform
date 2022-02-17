@@ -1,0 +1,58 @@
+.landing-signup {
+  .middle-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    transition: margin-top 0.2s ease-out 0s;
+    will-change: margin-top;
+    overflow: hidden;
+    height: 700px;
+    .bg {
+      transform: skew(0deg, -2deg) translate(0, -100px);
+      height: 700px;
+      will-change: clip-path, padding-top, padding-bottom;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      transition: clip-path 0.2s ease-out 0s, padding-top 0.2s ease-out 0s,
+        padding-bottom 0.2s ease-out 0s;
+      background: url(https://www.sentry.dev/_assets2/static/squiggle-trans-4dd611fceecc6f2c2b75f3e5b924636f.png)
+          0px 0px / 300px 300px,
+        linear-gradient(315deg, rgb(24, 13, 28) 0.57%, rgb(69, 38, 80) 100%) 0%
+          0% / cover;
+      .content {
+        transform: skew(0deg, 2deg);
+        margin-top: 200px;
+
+        .margin {
+          display: flex;
+          justify-content: space-between;
+
+          .left-desc {
+            color: white;
+            width: 435px;
+            h1 {
+              color: white;
+            }
+          }
+          .left-desc {
+            h1::selection {
+              background-color: #e1567c;
+            }
+            p::selection {
+              background-color: #e1567c;
+            }
+          }
+          .right-form {
+            background-color: white;
+            padding: 24px;
+            border-radius: 5px;
+            width: 621px;
+            .title {
+              font-size: 20px;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
