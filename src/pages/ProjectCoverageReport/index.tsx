@@ -5,7 +5,8 @@ import CoverageReport from "canyon-report";
 
 
 const ProjectCoverageReport: React.FC = () => {
-
+  // const fd =
+  const [fd,setFd] = useState<any>({})
   const history = useNavigate()
   const params = useParams();
   const {id,commitSha,catalogue} = params
@@ -19,9 +20,11 @@ const ProjectCoverageReport: React.FC = () => {
 
   useEffect(()=>{
     CoverageService.retrieveACoverageForAProjectService({
-      commitSha:commitSha
+      commitSha:commitSha,
+      projectId:id
     }).then(res=>{
-      setTreeSummary(res)
+      setTreeSummary(res.treeSummary)
+      setFd(res.fd)
     })
   },[])
 
@@ -56,6 +59,7 @@ const ProjectCoverageReport: React.FC = () => {
 
   return (
     <div style={{backgroundColor:'#fff',padding:'20px'}}>
+      <h2>{fd.path_with_namespace}</h2>
       <CoverageReport
         loading={loading}
         treeSummary={treeSummary}

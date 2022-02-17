@@ -28,7 +28,7 @@ const HelpButton = (props: any) => {
   const dropdownBtn = <span className={'dropdown-btn'}>?</span>
   return (
     <div className={'help-button'}>
-      <Dropdown visible={visible} overlay={menu} trigger={['click']} onVisibleChange={(val)=>{setVisible(val)}}>
+      <Dropdown visible={visible} placement={'topLeft'} overlay={menu} trigger={['click']} onVisibleChange={(val)=>{setVisible(val)}}>
         <div>
           {
             (!visible)?
