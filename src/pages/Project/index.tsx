@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Button, Tooltip, Tag, Divider, Popconfirm, message, notification } from "antd";
 import { DownOutlined, QuestionCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -7,6 +7,8 @@ import { ProjectService } from "../../services/ProjectService";
 import { useNavigate } from "react-router-dom";
 import { CoverageService } from "../../services/CoverageService";
 import './index.less'
+import ProjectLog from "./ProjectLog";
+import request from "../../utils/request";
 
 export type TableListItem = {
   id: number
@@ -81,7 +83,16 @@ export default () => {
                       history(`/project/${tableListItem.projectId}/commit/${tableListItem.commitSha}/tree/-1`)
                     }}
                   >
-                    查看报告
+                    报告
+                  </a>
+                  <Divider type={'vertical'}/>
+                  <a
+                      onClick={() => {
+                          setProjectLogVisible(true)
+                          setProjectLogCommitSha(tableListItem.commitSha)
+                      }}
+                  >
+                    日志
                   </a>
                 </div>
               )
@@ -105,29 +116,41 @@ export default () => {
     );
   };
 
+    const [projectLogVisible, setProjectLogVisible] = useState(false);
+    const [projectLogCommitSha, setProjectLogCommitSha] = useState(-1);
+
+    function closeProjectLogVisible() {
+        setProjectLogVisible(false)
+    }
+
+
+
   return (
-    <ProTable<TableListItem>
-      columns={columns}
-      request={(params, sorter, filter) => {
-        return ProjectService.listProject().then((res) => {
-          return {
-            data: res.reduce((previousValue:any, currentValue:any)=>{
-              if (!previousValue.map((item:any)=>item.repoId).includes(currentValue.repoId)){
-                previousValue.push(currentValue)
-              }
-              return previousValue
-            },[]),
-            success: true,
-          }
-        })
-      }}
-      rowKey="id"
-      pagination={{
-        showQuickJumper: true,
-      }}
-      expandable={{ expandedRowRender }}
-      search={false}
-      dateFormatter="string"
-    />
+      <div>
+          <ProTable<TableListItem>
+              columns={columns}
+              request={(params, sorter, filter) => {
+                  return ProjectService.listProject().then((res) => {
+                      return {
+                          data: res.reduce((previousValue:any, currentValue:any)=>{
+                              if (!previousValue.map((item:any)=>item.repoId).includes(currentValue.repoId)){
+                                  previousValue.push(currentValue)
+                              }
+                              return previousValue
+                          },[]),
+                          success: true,
+                      }
+                  })
+              }}
+              rowKey="id"
+              pagination={{
+                  showQuickJumper: true,
+              }}
+              expandable={{ expandedRowRender }}
+              search={false}
+              dateFormatter="string"
+          />
+          <ProjectLog commitSha={projectLogCommitSha} visible={projectLogVisible} closeVisible={closeProjectLogVisible}/>
+      </div>
   );
 };
