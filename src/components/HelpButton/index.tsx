@@ -19,11 +19,11 @@ const HelpButton = (props: any) => {
     </Menu>
   );
   useEffect(()=>{
-    axios.get('/api/cov/base/info').then(res=>{
-      console.log(res.data)
-      setV(res.data.version)
-      setDocUrl(res.data.docUrl)
-    })
+    // axios.get('/api/cov/base/info').then(res=>{
+    //   console.log(res.data)
+    //   setV(res.data.version)
+    //   setDocUrl(res.data.docUrl)
+    // })
   },[])
   const dropdownBtn = <span className={'dropdown-btn'}>?</span>
   return (

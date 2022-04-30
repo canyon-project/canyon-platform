@@ -54,12 +54,12 @@ export default function Admin() {
               dataSource={data}
               renderItem={item => (
                 <div>
-                  <List.Item actions={[<ChangePassword></ChangePassword>]}>
-                    <List.Item.Meta
-                      title={<span>账号密码</span>}
-                      description="在这里可以修改您的密码"
-                    />
-                  </List.Item>
+                  {/*<List.Item actions={[<ChangePassword></ChangePassword>]}>*/}
+                  {/*  <List.Item.Meta*/}
+                  {/*    title={<span>账号密码</span>}*/}
+                  {/*    description="在这里可以修改您的密码"*/}
+                  {/*  />*/}
+                  {/*</List.Item>*/}
                   <List.Item actions={[<a onClick={()=>{
                     copyToClipboard(localStorage.getItem('token')).then(res=>{
                       message.success('已经复制', 1)
@@ -67,7 +67,7 @@ export default function Admin() {
                   }}>复制</a>]}>
                     <List.Item.Meta
                       title={<span>鉴权令牌</span>}
-                      description={<div className={'ellipsis'}>上报覆盖率时所需要的鉴权令牌 {localStorage.getItem('token')}</div>}
+                      description={<div className={'ellipsis'}>{localStorage.getItem('token')}</div>}
                     />
                   </List.Item>
                 </div>)}

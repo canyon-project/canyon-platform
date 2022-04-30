@@ -8,7 +8,7 @@ import logoPng from "../../assets/img/light-logo.svg";
 import {useDispatch, useSelector} from "react-redux";
 import './index.less'
 import HelpButton from "../HelpButton";
-import {Dropdown, Menu} from 'antd';
+import {Avatar, Dropdown, Menu} from 'antd';
 import {useMount} from "ahooks";
 import {UserService} from "../../services/UserService";
 import { set } from '../../redux/action/userinfo'
@@ -50,7 +50,7 @@ export default () => {
       dispatch(set(res))
     }).catch(err=>{
       localStorage.clear()
-      history('/login')
+      history('/welcome')
     })
   });
 
@@ -89,6 +89,7 @@ export default () => {
           <div>
             <Dropdown overlay={RightMenu}>
               <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                <Avatar src={userinfo.avatar} style={{marginRight:'14px'}} />
                 {userinfo.username} <DownOutlined />
               </a>
             </Dropdown>

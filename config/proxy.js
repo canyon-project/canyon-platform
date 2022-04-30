@@ -1,39 +1,24 @@
 // DEV 和 FAT公用即可
 module.exports = {
   DEV: {
-    '/api/cov': {
+    '/api': {
       target: 'http://127.0.0.1:8080',
       changeOrigin: true,
-      pathRewrite: { '/api/cov': '/' },
-    },
-    '/report': {
-      target: 'http://127.0.0.1:8080',
-      changeOrigin: true,
-      pathRewrite: { '/report': '/report' },
+      pathRewrite: { '/api': '/' },
     },
   },
   FAT: {
-    '/api/cov': {
+    '/api': {
       target: 'http://127.0.0.1:8080',
       changeOrigin: true,
-      pathRewrite: { '/api/cov': '/' },
-    },
-    '/report': {
-      target: 'http://127.0.0.1:8080',
-      changeOrigin: true,
-      pathRewrite: { '/report': '/report' },
+      pathRewrite: { '/api': '/' },
     },
   },
   PROD: {
-    '/api/cov': {
+    '/api': {
       target: 'http://127.0.0.1:8080',
       changeOrigin: true,
-      pathRewrite: { '/api/cov': '/' },
-    },
-    '/report': {
-      target: 'http://127.0.0.1:8080',
-      changeOrigin: true,
-      pathRewrite: { '/report': '/report' },
+      pathRewrite: { '/api': '/' },
     },
   },
 }

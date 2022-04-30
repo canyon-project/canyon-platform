@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
 // @ts-ignore
 import proxy from './config/proxy'
 import react from '@vitejs/plugin-react'
@@ -26,15 +25,7 @@ for (const proxyConfigKey in proxyConfig) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    reactRefresh(),
-    react({
-      babel: {
-        plugins: [
-          'istanbul',
-          'canyon'
-        ],
-      },
-    }),
+    react(),
   ],
   css: {
     preprocessorOptions: {

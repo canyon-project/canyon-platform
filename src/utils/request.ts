@@ -8,7 +8,6 @@ const service = axios.create({
 
 const err = (error: any) => {
   if (error.response) {
-    console.log(error.response,'error.response')
     message.error(error.response.data.message)
   }
   return Promise.reject(error)

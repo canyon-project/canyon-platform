@@ -9,8 +9,14 @@ import CodeHouse from '../pages/CodeHouse'
 import Ex404 from '../pages/exception/404'
 import ProjectCoverageReport from '../pages/ProjectCoverageReport'
 import Login from "../pages/Login";
+import Welcome from "../pages/Welcome";
+import Dashboard from "../pages/Dashboard";
 
 export default [
+  {
+    path: '/welcome',
+    element: <Welcome />,
+  },
   {
     path: '/login',
     element: <Login />,
@@ -21,11 +27,11 @@ export default [
     children: [
       {
         path: '/',
-        element: <Navigate to={'/project'} replace />,
+        element: <Navigate to={'/dashboard'} replace />,
       },
       {
-        path: '/admin',
-        element: <Admin />,
+        path: '/dashboard',
+        element: <Dashboard />,
       },
       {
         path: 'project/:id/commit/:commitSha/tree/:catalogue',

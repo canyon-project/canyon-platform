@@ -15,6 +15,11 @@ export default {
     path: '/',
     routes: [
       {
+        path: '/dashboard',
+        name: 'Dashboard',
+        icon: <TableOutlined />,
+      },
+      {
         path: '/project',
         name: '项目列表',
         icon: <TableOutlined />,

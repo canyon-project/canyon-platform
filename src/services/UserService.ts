@@ -4,7 +4,7 @@ export class UserService {
     return requset.post('/api/cov/auth/login', data)
   }
   static async getuserinfo(): Promise<any> {
-    return requset.get('/api/cov/user/myInfo')
+    return requset.get('/api/user')
   }
   static async checkEmailType(params:any): Promise<any> {
     return requset.post('/api/cov/user/checkEmailType',params)
