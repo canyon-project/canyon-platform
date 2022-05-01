@@ -11,8 +11,8 @@ const Welcome = () => {
             redirect_uri = 'http://127.0.0.1:8000/login'
             ClientId = '50c768081026f4da5a0fb5368d36fa5e464d0ea614ed022490ad5771f3c688b3'
         } else {
-            redirect_uri = 'http://canyon-platform-v2.fat-1.qa.nt.ctripcorp.com/login'
-            ClientId = 'f8261f28206104cd4370436c24d274fb02deb8722cebe8156d2fe8882d3c079d'
+            redirect_uri = 'http://canyon.rico.org.cn/login'
+            ClientId = 'ffc3eef394876ab159d1b6e74799dc160825280ec6e19a7d234b6bf057db65c8'
         }
         window.location.href = `http://gitlab.com/oauth/authorize?response_type=code&state=STATE&scope=api&client_id=${ClientId}&redirect_uri=${redirect_uri}`
     }
