@@ -41,40 +41,42 @@ export default function Admin() {
   ];
 
   return (
-    <div style={{backgroundColor:'white'}}>
-      <Tabs activeKey={tabActiveKey} tabPosition={'left'} onChange={(key)=>{
-        setTabActiveKey(key)
-      }}>
-        <TabPane tab="安全设置" key="安全设置">
-          <div>
-            {/*<h1>安全设置</h1>*/}
-            <List
-              size="large"
-              header={<h3>安全设置</h3>}
-              dataSource={data}
-              renderItem={item => (
-                <div>
-                  {/*<List.Item actions={[<ChangePassword></ChangePassword>]}>*/}
-                  {/*  <List.Item.Meta*/}
-                  {/*    title={<span>账号密码</span>}*/}
-                  {/*    description="在这里可以修改您的密码"*/}
-                  {/*  />*/}
-                  {/*</List.Item>*/}
-                  <List.Item actions={[<a onClick={()=>{
-                    copyToClipboard(localStorage.getItem('token')).then(res=>{
-                      message.success('已经复制', 1)
-                    })
-                  }}>复制</a>]}>
-                    <List.Item.Meta
-                      title={<span>鉴权令牌</span>}
-                      description={<div className={'ellipsis'}>{localStorage.getItem('token')}</div>}
-                    />
-                  </List.Item>
-                </div>)}
-            />
-          </div>
-        </TabPane>
-      </Tabs>
-    </div>
+    <PageContainer>
+      <div style={{backgroundColor:'white'}}>
+        <Tabs activeKey={tabActiveKey} tabPosition={'left'} onChange={(key)=>{
+          setTabActiveKey(key)
+        }}>
+          <TabPane tab="安全设置" key="安全设置">
+            <div>
+              {/*<h1>安全设置</h1>*/}
+              <List
+                  size="large"
+                  header={<h3>安全设置</h3>}
+                  dataSource={data}
+                  renderItem={item => (
+                      <div>
+                        {/*<List.Item actions={[<ChangePassword></ChangePassword>]}>*/}
+                        {/*  <List.Item.Meta*/}
+                        {/*    title={<span>账号密码</span>}*/}
+                        {/*    description="在这里可以修改您的密码"*/}
+                        {/*  />*/}
+                        {/*</List.Item>*/}
+                        <List.Item actions={[<a onClick={()=>{
+                          copyToClipboard(localStorage.getItem('token')).then(res=>{
+                            message.success('已经复制', 1)
+                          })
+                        }}>复制</a>]}>
+                          <List.Item.Meta
+                              title={<span>鉴权令牌</span>}
+                              description={<div className={'ellipsis'}>{localStorage.getItem('token')}</div>}
+                          />
+                        </List.Item>
+                      </div>)}
+              />
+            </div>
+          </TabPane>
+        </Tabs>
+      </div>
+    </PageContainer>
   )
 }

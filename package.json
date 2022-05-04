@@ -21,6 +21,7 @@
     "axios": "^0.21.1",
     "canyon-report": "^0.1.9",
     "codemirror": "^5.65.0",
+    "echarts": "^5.3.2",
     "i18next": "^21.5.6",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.21",

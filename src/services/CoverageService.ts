@@ -1,6 +1,13 @@
 import requset from '../utils/request'
 
 export class CoverageService {
+  // 列出分支commit覆盖率
+  static async listCoverageCommit(data: any): Promise<any> {
+    return requset.get(`/api/repo/${data.repo}/commitSha/${data.commitSha}`, data)
+  }
+
+
+  // 以下无效
   static async listCoverageProjects(data: any): Promise<any> {
     return requset.get('/api/cov/Project/projects', data)
   }

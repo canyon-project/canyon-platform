@@ -2,7 +2,7 @@ import requset from '../utils/request'
 
 export class ProjectService {
   static async listProject(): Promise<any> {
-    return requset.get('/api/cov/project')
+    return requset.get('/api/repo')
   }
   static async retrieveAProject({ id }: any): Promise<any> {
     return requset.get(`/api/cov/project/${id}`)

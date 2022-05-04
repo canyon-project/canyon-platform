@@ -11,6 +11,8 @@ import ProjectCoverageReport from '../pages/ProjectCoverageReport'
 import Login from "../pages/Login";
 import Welcome from "../pages/Welcome";
 import Dashboard from "../pages/Dashboard";
+import Repo from '../pages/Repo'
+import RepoCoverageReport from "../pages/RepoCoverageReport";
 
 export default [
   {
@@ -25,17 +27,21 @@ export default [
     path: '/',
     element: <MainBox />,
     children: [
+      // {
+      //   path: '/',
+      //   element: <Navigate to={'/'} replace />,
+      // },
       {
         path: '/',
-        element: <Navigate to={'/dashboard'} replace />,
-      },
-      {
-        path: '/dashboard',
         element: <Dashboard />,
       },
       {
-        path: 'project/:id/commit/:commitSha/tree/:catalogue',
-        element: <ProjectCoverageReport />,
+        path: '/:group/:repo',
+        element: <Repo />,
+      },
+      {
+        path: '/:group/:repo/:commitSha/:path',
+        element: <RepoCoverageReport />,
       },
       {
         path: 'project/:id',
