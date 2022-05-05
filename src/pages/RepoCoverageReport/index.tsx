@@ -8,6 +8,8 @@ import {useNavigate, useParams} from "react-router-dom";
 
 const RepoCoverageReport = () => {
 
+  // 数据准备 根据commit获取commitMsg、头像、用户名、最后一次上报时间
+
 
 
   // const fd =

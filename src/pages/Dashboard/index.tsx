@@ -36,7 +36,7 @@ const openNotification = (req:any,res:any) => {
 const Dashboard =  () => {
     const columns: ProColumns<TableListItem>[] = [
         {
-            title: '项目ID',
+            title: '仓库ID',
             dataIndex: 'id',
         },
         // {
@@ -45,7 +45,7 @@ const Dashboard =  () => {
         // },
         {
             title: '仓库名称',
-            dataIndex: 'path_with_namespace',
+            dataIndex: 'pathWithNamespace',
             render(_:any,tableListItem){
                 return <a onClick={()=>{
                     history(`/${_}`)
@@ -59,10 +59,21 @@ const Dashboard =  () => {
         //         return <span>{_.bu}</span>
         //     }
         // },
-        // {
-        //     title: '源名称',
-        //     dataIndex: 'codeHouseApiVersion',
-        // }
+        {
+            title: '上报总次数',
+            dataIndex: 'times',
+        },
+        {
+            title: '最近一次上报',
+            dataIndex: 'lastTimeReport',
+        },
+        {
+            title: '操作',
+            // dataIndex: 'cishu',
+            render(){
+                return(<div>操作</div>)
+            }
+        }
     ]
     const ref = useRef<any>()
     const history = useNavigate()

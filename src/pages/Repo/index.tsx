@@ -1,21 +1,31 @@
 import {PageContainer} from "@ant-design/pro-layout";
-import {Button} from "antd";
-import React, {useRef} from "react";
+import {Button, Divider} from "antd";
+import React, {useRef, useState} from "react";
 import './index.less'
 import {useMount} from "ahooks";
 import * as echarts from "echarts";
 import ProTable, {ProColumns} from "@ant-design/pro-table";
 import {TableListItem} from "../Dashboard";
 import {CoverageService} from "../../services/CoverageService";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import ReportDetail from "./ReportDetail";
 
 const Repo = () => {
+  const [dataSource,setDataSource] = useState([])
+  const [reportDetailVisible,setReportDetailVisible] = useState(false)
+  const [selectCommit,setSelectCommit] = useState('')
+
+
+
+
   const content = (
 <div></div>
   );
   const chartRef = useRef(null)
   const history = useNavigate()
   const lLocation = useLocation()
+  const u = useParams()
+  console.log(u)
   useMount(()=>{
     setTimeout(()=>{
       // 基于准备好的dom，初始化echarts实例
@@ -51,17 +61,43 @@ const Repo = () => {
   })
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '项目ID',
-      dataIndex: 'id',
-    },
-    {
-      title: 'commitSha',
+      title: 'Commit Sha',
       dataIndex: 'commitSha',
       render(_:any,tableListItem){
         return <a onClick={()=>{
           console.log(lLocation,'lLocation')
           history(`${lLocation.pathname}/${_}/root`)
         }}>{_}</a>
+      }
+    },
+    {
+      title: 'Commit Message',
+      dataIndex: 'commitMsg',
+    },
+    {
+      title: '上报次数',
+      dataIndex: 'times',
+    },
+    {
+      title: '最近一次上报',
+      dataIndex: 'lastTimeReport',
+      valueType: 'dateTime',
+    },
+    {
+      title: '操作',
+      render(_,tableListItem){
+        return (
+            <div>
+              <a onClick={()=>{
+                history(`/${u.group}/${u.repo}/${tableListItem.commitSha}`)
+              }}>详情</a>
+              <Divider type={'vertical'}/>
+              <a onClick={()=>{
+                setReportDetailVisible(true)
+                setSelectCommit(tableListItem.commitSha)
+              }}>日志</a>
+            </div>
+        )
       }
     },
   ]
@@ -128,19 +164,23 @@ const Repo = () => {
                   columns={columns}
                   request={(params, sorter, filter) => {
                     return CoverageService.listCoverageCommit({id:encodeURIComponent('canyon999/canyon-demo2'),commitSha:'1233'}).then((res) => {
+                      setDataSource(res)
                       return {
                         data: res,
                         success: true,
                       }
                     })
                   }}
-                  rowKey="id"
+                  rowKey="commitSha"
                   pagination={{
                     showQuickJumper: true,
                   }}
                   search={false}
                   dateFormatter="string"
               />
+              <ReportDetail closeVisible={()=>{
+                setReportDetailVisible(false)
+              }} visible={reportDetailVisible} dataSource={dataSource} selectCommit={selectCommit}/>
             </div>
           </div>
         </div>
