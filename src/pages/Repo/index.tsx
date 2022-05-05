@@ -1,23 +1,21 @@
 import {PageContainer} from "@ant-design/pro-layout";
-import {Button, Card, Descriptions, Divider, Result, Space, Statistic} from "antd";
+import {Button} from "antd";
 import React, {useRef} from "react";
-import {LikeOutlined} from "@ant-design/icons";
 import './index.less'
 import {useMount} from "ahooks";
 import * as echarts from "echarts";
 import ProTable, {ProColumns} from "@ant-design/pro-table";
-import {ProjectService} from "../../services/ProjectService";
 import {TableListItem} from "../Dashboard";
 import {CoverageService} from "../../services/CoverageService";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Repo = () => {
   const content = (
 <div></div>
   );
-
   const chartRef = useRef(null)
-
-
+  const history = useNavigate()
+  const lLocation = useLocation()
   useMount(()=>{
     setTimeout(()=>{
       // 基于准备好的dom，初始化echarts实例
@@ -47,46 +45,25 @@ const Repo = () => {
           }
         ]
       };
-
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
     },100)
   })
-
-
-
-
-
-
-
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '项目ID',
       dataIndex: 'id',
     },
-    // {
-    //     title: '仓库Id',
-    //     dataIndex: 'repoId',
-    // },
     {
       title: 'commitSha',
       dataIndex: 'commitSha',
       render(_:any,tableListItem){
         return <a onClick={()=>{
+          console.log(lLocation,'lLocation')
+          history(`${lLocation.pathname}/${_}/root`)
         }}>{_}</a>
       }
     },
-    // {
-    //     title: 'BU',
-    //     dataIndex: 'projectRepoDetail',
-    //     render(_: any,tableListItem){
-    //         return <span>{_.bu}</span>
-    //     }
-    // },
-    // {
-    //     title: '源名称',
-    //     dataIndex: 'codeHouseApiVersion',
-    // }
   ]
 
   return         (
@@ -114,7 +91,6 @@ const Repo = () => {
       >
         <div
             style={{
-              // height: '120vh',
               paddingTop:'20px'
             }}
         >
@@ -146,14 +122,12 @@ const Repo = () => {
                 </div>
               </div>
             </div>
-
-
             <p className={'title'}>裁决</p>
             <div>
               <ProTable<TableListItem>
                   columns={columns}
                   request={(params, sorter, filter) => {
-                    return CoverageService.listCoverageCommit({repo:'35883195',commitSha:'1233'}).then((res) => {
+                    return CoverageService.listCoverageCommit({id:encodeURIComponent('canyon999/canyon-demo2'),commitSha:'1233'}).then((res) => {
                       return {
                         data: res,
                         success: true,

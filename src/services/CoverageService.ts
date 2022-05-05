@@ -3,7 +3,7 @@ import requset from '../utils/request'
 export class CoverageService {
   // 列出分支commit覆盖率
   static async listCoverageCommit(data: any): Promise<any> {
-    return requset.get(`/api/repo/${data.repo}/commitSha/${data.commitSha}`, data)
+    return requset.get(`/api/repo/${data.id}/commit`, data)
   }
 
 
@@ -25,11 +25,11 @@ export class CoverageService {
   }
 
   static async retrieveACoverageForAProjectService(data: any): Promise<any> {
-    return requset.get('/api/cov/project/coverage', {params:data})
+    return requset.get('/api/coverage/retrieveACoverageForAProjectService', {params:data})
   }
 
   static async fileContent(data: any): Promise<any> {
-    return requset.get(`/api/cov/project/filecontent`,{params:data})
+    return requset.get(`/api/coverage/filecontent`,{params:data})
   }
 
 

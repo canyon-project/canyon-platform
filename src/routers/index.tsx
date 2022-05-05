@@ -40,7 +40,7 @@ export default [
         element: <Repo />,
       },
       {
-        path: '/:group/:repo/:commitSha/:path',
+        path: '/:group/:repo/:commitSha',
         element: <RepoCoverageReport />,
       },
       {

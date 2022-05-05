@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {DownOutlined} from "@ant-design/icons";
 import type { ProSettings } from '@ant-design/pro-layout'
-import ProLayout, { PageContainer, SettingDrawer } from '@ant-design/pro-layout'
-import {Outlet, useNavigate, Link, useLocation} from 'react-router-dom'
+import ProLayout, { SettingDrawer } from '@ant-design/pro-layout'
+import {Outlet, useNavigate, useLocation} from 'react-router-dom'
 import logoPng from "../../assets/img/light-logo.svg";
 import {useDispatch, useSelector} from "react-redux";
 import './index.less'
 import HelpButton from "../HelpButton";
-import {Avatar, Dropdown, Menu} from 'antd';
 import {useMount} from "ahooks";
 import {UserService} from "../../services/UserService";
 import { set } from '../../redux/action/userinfo'
@@ -21,19 +19,6 @@ export default () => {
   const history = useNavigate()
   const uLocation = useLocation()
   const dispatch = useDispatch()
-
-  const RightMenu = (
-    <Menu>
-      <Menu.Item key={'logout'}>
-        <a onClick={()=>{
-          localStorage.clear()
-          window.location.reload()
-        }}>
-          退出登录
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
 
   useMount(() => {
     UserService.getuserinfo().then((res) => {
@@ -67,21 +52,19 @@ export default () => {
             name: '存储库',
             hideInMenu:true
           },
+            {
+                path: '/:p/:o/:commit',
+                name: '覆盖率详情',
+                hideInMenu:true
+            },
         ]}
         location={{
           pathname,
         }}
-        // breadcrumbProps={{
-        //   itemRender,
-        // }}
         breadcrumbRender={(routers = []) => {
           console.log(routers,'123')
           if (routers[0]?.breadcrumbName === '存储库'){
             return [
-              // {
-              //   path: '/',
-              //   breadcrumbName: '主页',
-              // },
               {
                 path: '/',
                 breadcrumbName: 'Dashboard',
@@ -90,14 +73,6 @@ export default () => {
             ]
           } else {
             return [
-              // {
-              //   path: '/',
-              //   breadcrumbName: '主页',
-              // },
-              // {
-              //   path: '/',
-              //   breadcrumbName: '测试页',
-              // },
               ...routers,
             ]
           }
