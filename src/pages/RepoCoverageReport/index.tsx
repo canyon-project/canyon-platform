@@ -1,5 +1,5 @@
 import {PageContainer} from "@ant-design/pro-layout";
-import {CheckCircleTwoTone} from "@ant-design/icons";
+import {CheckCircleTwoTone, FieldTimeOutlined} from "@ant-design/icons";
 import {Avatar, Divider} from "antd";
 import {CoverageService} from "../../services/CoverageService";
 import {useEffect, useState} from "react";
@@ -9,15 +9,9 @@ import {useNavigate, useParams} from "react-router-dom";
 const RepoCoverageReport = () => {
 
   // 数据准备 根据commit获取commitMsg、头像、用户名、最后一次上报时间
-
-
-
-  // const fd =
   const [fd,setFd] = useState<any>({})
-  const history = useNavigate()
+  const navigate = useNavigate()
   const params = useParams();
-  console.log(params,'params')
-  const {id,commitSha,catalogue} = params
   const [fileCoverage,setFileCoverage] = useState<any>([])
   const [treeSummary,setTreeSummary] = useState<any>([])
   const [loading,setLoading] = useState<any>(false)
@@ -26,29 +20,34 @@ const RepoCoverageReport = () => {
     content:''
   })
 
+
+  const [baseInfo,setBaseInfo] = useState<any>({})
+
   useEffect(()=>{
     CoverageService.retrieveACoverageForAProjectService({
-      commitSha:commitSha,
+      commitSha:params.commitSha,
     }).then(res=>{
       setTreeSummary(res.treeSummary)
       setFd(res.fd)
+      setBaseInfo(res.baseInfo)
     })
   },[])
-
   function onSelect(val:any) {
     if (!val.isLeaf){
       return
     }
     const filePath = encodeURIComponent(val.fullPath)
-    history(`/canyon999/canyon-demo2/6b13682b6f3f586739c7aa5f48140b721385c910?path=${filePath}`)
+    // console.log(params)
+    navigate(`/${params.group}/${params.repo}/${params.commitSha}?path=${filePath}`)
 
-    const params = {
+    const newParams = {
       filePath,
-      commitSha,
-      projectId:id
+      commitSha:params.commitSha,
+      projectId:params.id
     }
     setLoading(true)
-    CoverageService.fileContent(params).then(res=>{
+    CoverageService.fileContent(newParams).then(res=>{
+      console.log(res,'11233')
       setLoading(false)
       function getDecode(str:string){
         return decodeURIComponent(atob(str).split('').map(function (c) {
@@ -67,12 +66,18 @@ const RepoCoverageReport = () => {
 
   return <PageContainer title={<div>
     <p>qingkong-platform</p>
-    <div>
-      <CheckCircleTwoTone twoToneColor="#52c41a" />
-      <span>删除rep</span>
+    <div style={{fontSize:'14px',color:'#4f5162'}}>
+      {/*<CheckCircleTwoTone twoToneColor="#52c41a" />*/}
+      <span style={{}}>{baseInfo.commitMsg}</span>
       <Divider type={'vertical'}/>
-      <Avatar src="https://joeschmoe.io/api/v1/random" />
-      <span>wr_zhang25 laset report</span>
+      <Avatar src={baseInfo.lastReportAvatar} />
+      <span style={{fontSize:'12px',fontWeight:'normal'}}>{baseInfo.lastReportUsername} 最近上报</span>
+      <Divider type={'vertical'}/>
+
+      <div style={{fontSize:'12px',fontWeight:'normal',display:'inline-block'}}>
+        <FieldTimeOutlined />
+        <span style={{marginLeft:'8px'}}>{baseInfo.lastTimeReport}</span>
+      </div>
     </div>
   </div>}>
     <div style={{backgroundColor:'#fff'}}>

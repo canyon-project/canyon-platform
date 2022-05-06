@@ -6,6 +6,10 @@ export class CoverageService {
     return requset.get(`/api/repo/${data.id}/commit`, data)
   }
 
+  static async repoSummary(data: any): Promise<any> {
+    return requset.get(`/api/repo/${data.id}/summary`, data)
+  }
+
 
   // 以下无效
   static async listCoverageProjects(data: any): Promise<any> {

@@ -49,7 +49,7 @@ export default () => {
           },
           {
             path: '/:p/:o',
-            name: '存储库',
+            name: '覆盖率概览',
             hideInMenu:true
           },
             {
@@ -63,7 +63,7 @@ export default () => {
         }}
         breadcrumbRender={(routers = []) => {
           console.log(routers,'123')
-          if (routers[0]?.breadcrumbName === '存储库'){
+          if (routers[0]?.breadcrumbName === '覆盖率概览'){
             return [
               {
                 path: '/',

@@ -3,7 +3,7 @@ import { message } from 'antd'
 
 // 创建 axios 实例
 const service = axios.create({
-  timeout: 10000, // 请求超时时间
+  timeout: 20000, // 请求超时时间
 })
 
 const err = (error: any) => {

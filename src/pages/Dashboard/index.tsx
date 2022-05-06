@@ -12,9 +12,9 @@ import request from "../../utils/request";
 import {PageContainer} from "@ant-design/pro-layout";
 
 export type TableListItem = {
-    id: number
-    commitSha: string
-    projectName: string
+    // id: number
+    // commitSha: string
+    // projectName: string
 }
 
 
@@ -70,8 +70,10 @@ const Dashboard =  () => {
         {
             title: '操作',
             // dataIndex: 'cishu',
-            render(){
-                return(<div>操作</div>)
+            render(_,tableListItem:any){
+                return(<a onClick={()=>{
+                    history(`/${tableListItem.pathWithNamespace}`)
+                }}>查看</a>)
             }
         }
     ]
