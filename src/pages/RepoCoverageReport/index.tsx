@@ -23,9 +23,11 @@ const RepoCoverageReport = () => {
 
   const [baseInfo,setBaseInfo] = useState<any>({})
 
+  console.log(params,'params')
   useEffect(()=>{
     CoverageService.retrieveACoverageForAProjectService({
       commitSha:params.commitSha,
+      thRepoId: `${params.group}/${params.repo}`
     }).then(res=>{
       setTreeSummary(res.treeSummary)
       setFd(res.fd)
@@ -39,6 +41,7 @@ const RepoCoverageReport = () => {
     const filePath = encodeURIComponent(val.fullPath)
     // console.log(params)
     navigate(`/${params.group}/${params.repo}/${params.commitSha}?path=${filePath}`)
+
 
     const newParams = {
       filePath,

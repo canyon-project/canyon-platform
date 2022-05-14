@@ -29,7 +29,7 @@ const Repo = () => {
     console.log(u)
     useMount(() => {
         setSummarySpinning(true)
-        CoverageService.repoSummary({id: encodeURIComponent('canyon999/canyon-demo2'), commitSha: '1233'}).then(res => {
+        CoverageService.repoSummary({id: encodeURIComponent('canyon/canyon-platform'), commitSha: '1233'}).then(res => {
             setSummarySpinning(false)
             setSummaryData(res)
             setTimeout(() => {
@@ -38,7 +38,7 @@ const Repo = () => {
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: '最近几次commit覆盖率情况'
+                        text: '最近几次commit覆盖率情况1'
                     },
                     tooltip: {},
                     legend: {
@@ -94,7 +94,7 @@ const Repo = () => {
             render(_: any, tableListItem) {
                 return <a onClick={() => {
                     console.log(lLocation, 'lLocation')
-                    history(`${lLocation.pathname}/${_}/root`)
+                    history(`${lLocation.pathname}/${_}`)
                 }}>{_}</a>
             }
         },
@@ -146,12 +146,6 @@ const Repo = () => {
                 <div></div>
             }
             extra={[]}
-            footer={[
-                <Button key="3">重置</Button>,
-                <Button key="2" type="primary">
-                    提交
-                </Button>,
-            ]}
         >
             <div
                 style={{
@@ -202,8 +196,9 @@ const Repo = () => {
                         <ProTable<TableListItem>
                             columns={columns}
                             request={(params, sorter, filter) => {
+                                console.log(params)
                                 return CoverageService.listCoverageCommit({
-                                    id: encodeURIComponent('canyon999/canyon-demo2'),
+                                    id: encodeURIComponent('canyon/canyon-platform'),
                                     commitSha: '1233'
                                 }).then((res) => {
                                     setDataSource(res)

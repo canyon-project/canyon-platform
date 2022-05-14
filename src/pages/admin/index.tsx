@@ -42,6 +42,13 @@ export default function Admin() {
 
   return (
     <PageContainer>
+      <div style={{position:'absolute',right:0,top:0}}>
+        <Button type={'primary'}
+        onClick={()=>{
+          localStorage.clear()
+          window.location.reload()
+        }}>登出</Button>
+      </div>
       <div style={{backgroundColor:'white'}}>
         <Tabs activeKey={tabActiveKey} tabPosition={'left'} onChange={(key)=>{
           setTabActiveKey(key)

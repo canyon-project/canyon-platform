@@ -37,7 +37,7 @@ const Login=(props:any)=> {
     request.post('/api/oauth/token',{code}).then((res:any)=>{
       // console.log(res,123)
       localStorage.setItem('token',res.token)
-      nav('/dashboard')
+      nav('/')
     })
 
 
