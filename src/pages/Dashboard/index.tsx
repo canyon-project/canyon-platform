@@ -20,18 +20,6 @@ export type TableListItem = {
 
 
 
-const openNotification = (req:any,res:any) => {
-    // const type:any = res.error?'error':'success'
-    const codePath = `${req.codeHouseId}-${req.repoId}-${req.commitSha}`
-    const args = {
-        message: '覆盖率报告生成成功',
-        description: <p>{res.msg} <a target={'_blank'} href={`/report/${codePath}`}>查看详情</a></p>,
-        duration: 0
-    };
-    notification.success(args)
-};
-
-
 
 const Dashboard =  () => {
     const columns: ProColumns<TableListItem>[] = [

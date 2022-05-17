@@ -5,6 +5,7 @@ import {CoverageService} from "../../services/CoverageService";
 import {useEffect, useState} from "react";
 import CoverageReport from "../../components/CanyonReport";
 import {useNavigate, useParams} from "react-router-dom";
+import {useMount} from "ahooks";
 
 const RepoCoverageReport = () => {
 
@@ -23,8 +24,10 @@ const RepoCoverageReport = () => {
 
   const [baseInfo,setBaseInfo] = useState<any>({})
 
-  console.log(params,'params')
-  useEffect(()=>{
+  // console.log(params,'params')
+
+  // 组件挂载时
+  useMount(()=>{
     CoverageService.retrieveACoverageForAProjectService({
       commitSha:params.commitSha,
       thRepoId: `${params.group}/${params.repo}`
@@ -33,24 +36,20 @@ const RepoCoverageReport = () => {
       setFd(res.fd)
       setBaseInfo(res.baseInfo)
     })
-  },[])
+  })
   function onSelect(val:any) {
     if (!val.isLeaf){
       return
     }
     const filePath = encodeURIComponent(val.fullPath)
-    // console.log(params)
     navigate(`/${params.group}/${params.repo}/${params.commitSha}?path=${filePath}`)
-
-
     const newParams = {
       filePath,
       commitSha:params.commitSha,
-      projectId:params.id
+      projectId:encodeURIComponent(`${params.group}/${params.repo}`)
     }
     setLoading(true)
     CoverageService.fileContent(newParams).then(res=>{
-      console.log(res,'11233')
       setLoading(false)
       function getDecode(str:string){
         return decodeURIComponent(atob(str).split('').map(function (c) {

@@ -7,7 +7,7 @@ export class CoverageService {
   }
 
   static async repoSummary(data: any): Promise<any> {
-    return requset.get(`/api/repo/${data.id}/summary`, data)
+    return requset.get(`/api/repo/${data.id}/summary`)
   }
 
 

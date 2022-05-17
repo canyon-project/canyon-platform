@@ -23,13 +23,12 @@ const Repo = () => {
         <div></div>
     );
     const chartRef = useRef(null)
-    const history = useNavigate()
+    const navigate = useNavigate()
     const lLocation = useLocation()
-    const u = useParams()
-    console.log(u)
+    const {group,repo} = useParams()
     useMount(() => {
         setSummarySpinning(true)
-        CoverageService.repoSummary({id: encodeURIComponent('canyon/canyon-platform'), commitSha: '1233'}).then(res => {
+        CoverageService.repoSummary({id: encodeURIComponent(`${group}/${repo}`)}).then(res => {
             setSummarySpinning(false)
             setSummaryData(res)
             setTimeout(() => {
@@ -38,7 +37,7 @@ const Repo = () => {
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: '最近几次commit覆盖率情况1'
+                        text: '最近几次commit覆盖率情况'
                     },
                     tooltip: {},
                     legend: {
@@ -93,8 +92,7 @@ const Repo = () => {
             dataIndex: 'commitSha',
             render(_: any, tableListItem) {
                 return <a onClick={() => {
-                    console.log(lLocation, 'lLocation')
-                    history(`${lLocation.pathname}/${_}`)
+                    navigate(`${lLocation.pathname}/${_}`)
                 }}>{_}</a>
             }
         },
@@ -117,7 +115,7 @@ const Repo = () => {
                 return (
                     <div>
                         <a onClick={() => {
-                            history(`/${u.group}/${u.repo}/${tableListItem.commitSha}`)
+                            navigate(`/${group}/${repo}/${tableListItem.commitSha}`)
                         }}>详情</a>
                         <Divider type={'vertical'}/>
                         <a onClick={() => {
@@ -133,7 +131,7 @@ const Repo = () => {
     return (
         <PageContainer
             title={<div style={{width: '100%'}}>
-                canyon-application
+                {repo}
             </div>}
             content={content}
             tabList={[
@@ -196,10 +194,8 @@ const Repo = () => {
                         <ProTable<TableListItem>
                             columns={columns}
                             request={(params, sorter, filter) => {
-                                console.log(params)
                                 return CoverageService.listCoverageCommit({
-                                    id: encodeURIComponent('canyon/canyon-platform'),
-                                    commitSha: '1233'
+                                    id: encodeURIComponent(`${group}/${repo}`),
                                 }).then((res) => {
                                     setDataSource(res)
                                     return {
