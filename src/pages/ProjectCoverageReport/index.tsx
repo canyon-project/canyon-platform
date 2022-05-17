@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {CoverageService} from "../../services/CoverageService";
 import {useNavigate, useParams} from "react-router-dom";
-import CoverageReport from "canyon-report";
+import CoverageReport from "../../components/CanyonReport";
 
 
 const ProjectCoverageReport: React.FC = () => {

@@ -3,7 +3,7 @@ import {CheckCircleTwoTone, FieldTimeOutlined} from "@ant-design/icons";
 import {Avatar, Divider} from "antd";
 import {CoverageService} from "../../services/CoverageService";
 import {useEffect, useState} from "react";
-import CoverageReport from "canyon-report";
+import CoverageReport from "../../components/CanyonReport";
 import {useNavigate, useParams} from "react-router-dom";
 
 const RepoCoverageReport = () => {
@@ -74,7 +74,7 @@ const RepoCoverageReport = () => {
       <span style={{}}>{baseInfo.commitMsg}</span>
       <Divider type={'vertical'}/>
       <Avatar src={baseInfo.lastReportAvatar} />
-      <span style={{fontSize:'12px',fontWeight:'normal'}}>{baseInfo.lastReportUsername} 最近上报</span>
+      <span style={{fontSize:'12px',fontWeight:'normal'}}>{baseInfo.lastReportUsername} 最近上报1</span>
       <Divider type={'vertical'}/>
 
       <div style={{fontSize:'12px',fontWeight:'normal',display:'inline-block'}}>
