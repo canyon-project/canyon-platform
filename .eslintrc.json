@@ -1,0 +1,24 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended", // 使用react的推荐规则
+    "plugin:@typescript-eslint/recommended", // 使用推荐的规则，来自@typescript-eslint/eslint-plugin
+    "plugin:prettier/recommended" // 使用eslint-plugin-prettier推荐的配置，注意需要在最后一个
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020, // 让parser按更新的语法来解析
+    "sourceType": "module", // 让parser按ESM解析
+    "ecmaFeatures": {
+      "jsx": true // 支持解析JSX
+    }
+  },
+  "settings": {},
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "semi": [2, "never"]
+  }
+}

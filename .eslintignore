@@ -1,0 +1,10 @@
+node_modules
+.vscode
+.idea
+dist
+/public
+.eslintrc.js
+config/proxy.js
+config/webpack.config.js
+
+scripts/*

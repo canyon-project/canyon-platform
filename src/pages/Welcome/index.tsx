@@ -1,47 +1,12 @@
+import React, { useState, useTransition } from 'react'
 import WelcomeSvg from '../../assets/img/sss.svg'
 import logoSvg from '../../assets/img/logo.svg'
 import './index.less'
 import { Button } from 'antd'
-import { useMount } from 'ahooks'
-import { BaseService } from '../../services/BaseService'
-import {useEffect, useState} from 'react'
-
+import { useTranslation } from 'react-i18next'
 const Welcome = () => {
-  const [baseInfo, setBaseInfo] = useState({
-    thAppType: '',
-    thAppClientId: '',
-    thAppRedirectUri: '',
-    thAppUri: '',
-  })
-  // 重定向去第三方鉴权
-  function redirectToThAuth() {
-    // let redirect_uri = ''
-    // let ClientId = ''
-    // if (window.location.hostname.includes('127.0.0.1')) {
-    //   redirect_uri = 'http://127.0.0.1:8000/login'
-    //   ClientId =
-    //     'a706dedb740074edb802e8c60e418b74fc95c8fbef48316e501de50028c6462a'
-    // } else {
-    //   redirect_uri = 'http://canyon.rico.org.cn/login'
-    //   ClientId =
-    //     'ffc3eef394876ab159d1b6e74799dc160825280ec6e19a7d234b6bf057db65c8'
-    // }
-    window.location.href = `${baseInfo.thAppUri}/oauth/authorize?response_type=code&state=STATE&scope=api&client_id=${baseInfo.thAppClientId}&redirect_uri=${baseInfo.thAppRedirectUri}`
-  }
-
-  useMount(() => {
-    BaseService.getBaseInfo().then((res) => {
-      console.log(res, '123')
-        setBaseInfo(res)
-
-
-
-    })
-  })
-
-    useEffect(()=>{
-        console.log(`${baseInfo.thAppUri}/oauth/authorize?response_type=code&state=STATE&scope=api&client_id=${baseInfo.thAppClientId}&redirect_uri=${baseInfo.thAppRedirectUri}`)
-    },[baseInfo])
+  const { t } = useTranslation()
+  function fn() {}
 
   return (
     <div className={'welcome'}>
@@ -52,7 +17,7 @@ const Welcome = () => {
             <span>CANYON</span>
           </div>
           <h1 className={'title'}>
-            你好，
+            {t('Hello')}，
             <br />
             欢迎来到Canyon。
           </h1>
@@ -61,7 +26,7 @@ const Welcome = () => {
             type={'primary'}
             style={{ width: '100%' }}
             size={'large'}
-            onClick={() => redirectToThAuth()}
+            onClick={() => fn()}
           >
             继续
           </Button>

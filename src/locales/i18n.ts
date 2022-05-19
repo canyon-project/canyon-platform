@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next'
 const resources = {
   en_US: {
     translation: {
-      HelloWorld: 'HelloWorld',
+      Hello: 'Hello',
       登录: 'SIGN IN',
       文档: 'DOCS',
       开始使用: 'GET STARTED',
