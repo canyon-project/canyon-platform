@@ -3,6 +3,7 @@ import Welcome from '../pages/Welcome'
 import ToDoList from '../pages/ToDoList'
 import MainBox from '../components/MainBox/indexNew'
 import Dashboard from '../pages/Dashboard'
+import Repo from '../pages/Repo'
 
 export default [
   {
@@ -20,6 +21,10 @@ export default [
       {
         path: '/',
         element: <Dashboard />,
+      },
+      {
+        path: '/:group/:repo',
+        element: <Repo />,
       },
     ],
   },
