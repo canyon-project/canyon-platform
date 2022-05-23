@@ -73,6 +73,5 @@ module.exports = {
     }),
   ],
   devtool: 'source-map',
-  // 模式，暂时还不知道干什么的
-  mode: 'development', //这个将是 process.env development的值
+  mode: 'development',
 }

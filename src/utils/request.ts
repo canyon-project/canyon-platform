@@ -19,6 +19,7 @@ service.interceptors.request.use((config) => {
     // @ts-ignore
     config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
   }
+  config.headers['Lang'] = localStorage.getItem('lang') || 'en_US'
 
   return config
 }, err)

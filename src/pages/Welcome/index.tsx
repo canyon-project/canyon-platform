@@ -1,12 +1,47 @@
-import React, { useState, useTransition } from 'react'
 import WelcomeSvg from '../../assets/img/sss.svg'
 import logoSvg from '../../assets/img/logo.svg'
 import './index.less'
 import { Button } from 'antd'
-import { useTranslation } from 'react-i18next'
+import { useMount } from 'ahooks'
+import { BaseService } from '../../services/BaseService'
+import React,{useEffect, useState} from 'react'
+
 const Welcome = () => {
-  const { t } = useTranslation()
-  function fn() {}
+  const [baseInfo, setBaseInfo] = useState({
+    thAppType: '',
+    thAppClientId: '',
+    thAppRedirectUri: '',
+    thAppUri: '',
+  })
+  // 重定向去第三方鉴权
+  function redirectToThAuth() {
+    // let redirect_uri = ''
+    // let ClientId = ''
+    // if (window.location.hostname.includes('127.0.0.1')) {
+    //   redirect_uri = 'http://127.0.0.1:8000/login'
+    //   ClientId =
+    //     'a706dedb740074edb802e8c60e418b74fc95c8fbef48316e501de50028c6462a'
+    // } else {
+    //   redirect_uri = 'http://canyon.rico.org.cn/login'
+    //   ClientId =
+    //     'ffc3eef394876ab159d1b6e74799dc160825280ec6e19a7d234b6bf057db65c8'
+    // }
+    window.location.href = `${baseInfo.thAppUri}/oauth/authorize?response_type=code&state=STATE&scope=api&client_id=${baseInfo.thAppClientId}&redirect_uri=${baseInfo.thAppRedirectUri}`
+  }
+
+  useMount(() => {
+    BaseService.getBaseInfo().then((res) => {
+      console.log(res, '123')
+        setBaseInfo(res)
+
+
+
+    })
+  })
+
+    useEffect(()=>{
+        console.log(`${baseInfo.thAppUri}/oauth/authorize?response_type=code&state=STATE&scope=api&client_id=${baseInfo.thAppClientId}&redirect_uri=${baseInfo.thAppRedirectUri}`)
+    },[baseInfo])
 
   return (
     <div className={'welcome'}>
@@ -17,18 +52,18 @@ const Welcome = () => {
             <span>CANYON</span>
           </div>
           <h1 className={'title'}>
-            {t('Hello')}，
+            Hello，
             <br />
-            欢迎来到Canyon。
+            Welcome to Canyon。
           </h1>
-          <p className={'desc'}>您将被重定向到源代码管理系统进行身份验证。</p>
+          <p className={'desc'}>You will be redirected to your source control management system to authenticate.</p>
           <Button
             type={'primary'}
             style={{ width: '100%' }}
             size={'large'}
-            onClick={() => fn()}
+            onClick={() => redirectToThAuth()}
           >
-            继续
+            Continue
           </Button>
         </div>
       </div>

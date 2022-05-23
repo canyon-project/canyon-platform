@@ -6,16 +6,31 @@ import logoPng from '../../assets/img/light-logo.svg'
 import './index.less'
 import HelpButton from '../HelpButton'
 import { useMount } from 'ahooks'
+import { useTranslation } from 'react-i18next'
+import { UserService } from '../../services/UserService'
+import { useStore } from './../../store'
 
 export default () => {
+  // const userinfo: any = useSelector((state) => state)
+  const userinfo = useStore((state) => state.userinfo)
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({
     fixSiderbar: true,
   })
   const [pathname, setPathname] = useState('/')
-  const history = useNavigate()
+  const navigate = useNavigate()
   const uLocation = useLocation()
+  const { t } = useTranslation()
+  const setUserinfo = useStore((state) => state.setUserinfo)
 
   useMount(() => {
+    UserService.getuserinfo()
+      .then((res) => {
+        setUserinfo(res)
+      })
+      .catch((err) => {
+        localStorage.clear()
+        navigate('/welcome')
+      })
   })
 
   useEffect(() => {
@@ -32,17 +47,17 @@ export default () => {
         menuDataRender={() => [
           {
             path: '/user',
-            name: '个人信息',
+            name: 'User Info',
             hideInMenu: true,
           },
           {
-            path: '/:p/:o',
-            name: '覆盖率概览',
+            path: '/:group/:repo',
+            name: t('coverage') + ' ' + t('overview'),
             hideInMenu: true,
           },
           {
-            path: '/:p/:o/:commit',
-            name: '覆盖率详情',
+            path: '/:group/:repo/:commitSha',
+            name: t('coverage') + ' ' + t('detail'),
             hideInMenu: true,
           },
         ]}
@@ -50,8 +65,7 @@ export default () => {
           pathname,
         }}
         breadcrumbRender={(routers = []) => {
-          console.log(routers, '123')
-          if (routers[0]?.breadcrumbName === '覆盖率概览') {
+          if (routers[0]?.breadcrumbName === 'Coverage Overview') {
             return [
               {
                 path: '/',
@@ -64,13 +78,13 @@ export default () => {
           }
         }}
         onMenuHeaderClick={(e) => {
-          history('/')
+          navigate('/')
         }}
         menuItemRender={(item: any, dom) => {
           return (
             <a
               onClick={() => {
-                history(item.path)
+                navigate(item.path)
               }}
             >
               {dom}
@@ -89,17 +103,28 @@ export default () => {
                 alignItems: 'center',
               }}
               onClick={() => {
-                history('/user')
+                navigate('/user')
               }}
               target="_blank"
               rel="noreferrer"
             >
+              <img
+                alt="pro-logo"
+                src={userinfo.avatar}
+                style={{
+                  width: 24,
+                  height: 24,
+                  margin: '0 12px',
+                  borderRadius: '50%',
+                }}
+              />
             </a>
           )
         }}
         {...settings}
       >
         <div>
+          {/*<div>{JSON.stringify(userinfo)}</div>*/}
           <Outlet />
           <HelpButton />
         </div>

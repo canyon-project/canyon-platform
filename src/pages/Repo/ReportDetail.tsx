@@ -3,43 +3,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import request from '../../utils/request'
 import moment from 'moment'
-
-const columns = [
-  {
-    title: '覆盖率Id',
-    dataIndex: 'id',
-  },
-
-  {
-    title: 'Commit Sha',
-    dataIndex: 'commitSha',
-  },
-  {
-    title: '插桩路径',
-    dataIndex: 'instrumentCwd',
-  },
-  {
-    title: '上报者',
-    dataIndex: 'reporterUsername',
-    render(_, t): any {
-      return (
-        <div>
-          <Avatar src={t.reporterAvatar} />
-          <span style={{ marginLeft: '10px', color: '#4f5162' }}>
-            {t.reporterUsername}
-          </span>
-        </div>
-      )
-    },
-  },
-  {
-    title: '上报时间',
-    dataIndex: 'createdAt',
-    render(_: any) {
-      return moment(_).format('YYYY-MM-DD HH:mm')
-    },
-  },
-]
+import { useTranslation } from 'react-i18next'
 
 const ReportDetail: React.FC = ({
   visible,
@@ -48,13 +12,50 @@ const ReportDetail: React.FC = ({
   dataSource,
   selectCommit,
 }: any) => {
+  const { t } = useTranslation()
+  const columns = [
+    {
+      title: t('coverage') + 'ID',
+      dataIndex: 'id',
+    },
+
+    {
+      title: 'Commit Sha',
+      dataIndex: 'commitSha',
+    },
+    {
+      title: t('instrumentCwd'),
+      dataIndex: 'instrumentCwd',
+    },
+    {
+      title: t('reporter'),
+      dataIndex: 'reporterUsername',
+      render(_, t): any {
+        return (
+          <div>
+            <Avatar src={t.reporterAvatar} />
+            <span style={{ marginLeft: '10px', color: '#4f5162' }}>
+              {t.reporterUsername}
+            </span>
+          </div>
+        )
+      },
+    },
+    {
+      title: t('reportTime'),
+      dataIndex: 'createdAt',
+      render(_: any) {
+        return moment(_).format('YYYY-MM-DD HH:mm')
+      },
+    },
+  ]
   const onClose = () => {
     closeVisible()
   }
   return (
     <>
       <Drawer
-        title="上报日志"
+        title={t('reportLog')}
         placement="right"
         width={'65%'}
         onClose={onClose}

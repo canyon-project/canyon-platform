@@ -8,8 +8,10 @@ import ProTable, { ProColumns } from '@ant-design/pro-table'
 import { CoverageService } from '../../services/CoverageService'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import ReportDetail from './ReportDetail'
+import { useTranslation } from 'react-i18next'
 
 const Repo = () => {
+  const { t } = useTranslation()
   const [dataSource, setDataSource] = useState([])
   const [reportDetailVisible, setReportDetailVisible] = useState(false)
   const [selectCommit, setSelectCommit] = useState('')
@@ -29,14 +31,20 @@ const Repo = () => {
       id: encodeURIComponent(`${group}/${repo}`),
     }).then((res) => {
       setSummarySpinning(false)
-      setSummaryData(res)
+      setSummaryData({
+        gongGeData: res.gongGeData.map((i) => ({
+          value: i.value,
+          label: t(i.label),
+        })),
+        chartData: res.chartData,
+      })
       setTimeout(() => {
         // 基于准备好的dom，初始化echarts实例
         const myChart = echarts.init(chartRef.current)
         // 指定图表的配置项和数据
         const option = {
           title: {
-            text: '最近几次commit覆盖率情况',
+            text: t('recentCommitCoverage'),
           },
           tooltip: {},
           legend: {
@@ -104,16 +112,16 @@ const Repo = () => {
       dataIndex: 'commitMsg',
     },
     {
-      title: '上报次数',
+      title: t('reportTimes'),
       dataIndex: 'times',
     },
     {
-      title: '最近一次上报',
+      title: t('lastTimeReport'),
       dataIndex: 'lastTimeReport',
       valueType: 'dateTime',
     },
     {
-      title: '操作',
+      title: t('operation'),
       render(_, tableListItem) {
         return (
           <div>
@@ -122,7 +130,7 @@ const Repo = () => {
                 navigate(`/${group}/${repo}/${tableListItem.commitSha}`)
               }}
             >
-              详情
+              {t('detail')}
             </a>
             <Divider type={'vertical'} />
             <a
@@ -131,7 +139,7 @@ const Repo = () => {
                 setSelectCommit(tableListItem.commitSha)
               }}
             >
-              日志
+              {t('log')}
             </a>
           </div>
         )
@@ -145,7 +153,7 @@ const Repo = () => {
       content={content}
       tabList={[
         {
-          tab: '上报',
+          tab: t('report'),
           key: 'base',
         },
       ]}
@@ -158,7 +166,7 @@ const Repo = () => {
         }}
       >
         <div>
-          <p className={'title'}>概览</p>
+          <p className={'title'}>{t('overview')}</p>
           <Spin spinning={summarySpinning}>
             <div className={'summary'}>
               <div className={'summary-left'}>
@@ -180,12 +188,12 @@ const Repo = () => {
             </div>
           </Spin>
 
-          <p className={'title'}>裁决</p>
+          <p className={'title'}>{t('detail')}</p>
           <div>
             <ProTable<any>
               columns={columns}
               request={(params, sorter, filter) => {
-                return CoverageService.listCoverageCommit({
+                return CoverageService.repoCoverage({
                   id: encodeURIComponent(`${group}/${repo}`),
                 }).then((res) => {
                   setDataSource(res)
