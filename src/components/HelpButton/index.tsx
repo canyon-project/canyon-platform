@@ -21,11 +21,10 @@ const HelpButton = (props: any) => {
     </Menu>
   )
   useEffect(() => {
-    // axios.get('/api/cov/base/info').then(res=>{
-    //   console.log(res.data)
-    //   setV(res.data.version)
-    //   setDocUrl(res.data.docUrl)
-    // })
+    axios.get('/api/base').then(res=>{
+      setV(res.data.version)
+      setDocUrl('https://canyon-project.github.io/canyon.io/docs/get_started/first_coverage')
+    })
   }, [])
   const dropdownBtn = <span className={'dropdown-btn'}>?</span>
   return (
