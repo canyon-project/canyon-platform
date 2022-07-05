@@ -81,7 +81,7 @@ const RepoCoverageReport = () => {
     <PageContainer
       title={
         <div>
-          <p>qingkong-platform</p>
+          <p>{params.repo}</p>
           <div style={{ fontSize: '14px', color: '#4f5162' }}>
             {/*<CheckCircleTwoTone twoToneColor="#52c41a" />*/}
             <span style={{}}>{baseInfo.commitMsg}</span>
