@@ -18,7 +18,10 @@ const ReportDetail: React.FC = ({
       title: t('coverage') + 'ID',
       dataIndex: 'id',
     },
-
+    {
+      title: 'Report ID',
+      dataIndex: 'reportId',
+    },
     {
       title: 'Commit Sha',
       dataIndex: 'commitSha',
