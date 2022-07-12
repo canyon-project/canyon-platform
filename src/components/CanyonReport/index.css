@@ -30,6 +30,9 @@
   overflow-x: scroll;
   flex-shrink:0;
 }
+.coverage-report .ant-tree-node-content-wrapper{
+  display: flex;
+}
 
 
 .coverage-report .right-detail{
