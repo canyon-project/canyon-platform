@@ -19,6 +19,7 @@ const RepoCoverageReport = () => {
   const [fileCoverage, setFileCoverage] = useState<any>([])
   const [treeSummary, setTreeSummary] = useState<any>([])
   const [loading, setLoading] = useState<any>(false)
+  const [boxLoading, setBoxLoading] = useState<any>(false)
   const [fileDetail, setFileDetail] = useState<any>({
     fileName: '.js',
     content: '',
@@ -30,6 +31,7 @@ const RepoCoverageReport = () => {
 
   // 组件挂载时
   useMount(() => {
+    setBoxLoading(true)
     CoverageService.retrieveACoverageForAProjectService({
       commitSha: params.commitSha,
       thRepoId: `${params.group}/${params.repo}`,
@@ -37,6 +39,7 @@ const RepoCoverageReport = () => {
       setTreeSummary(res.treeSummary)
       setFd(res.fd)
       setBaseInfo(res.baseInfo)
+      setBoxLoading(false)
 
       setTimeout(()=>{
         document.querySelector("#main-box > div > section > div.ant-layout > main > div > div.ant-pro-page-container > div.ant-pro-grid-content > div > div > div > div > div.tree-file-dir > div > div.ant-tree-list > div > div > div > div > span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-close.ant-tree-node-selected").click()
@@ -79,6 +82,7 @@ const RepoCoverageReport = () => {
 
   return (
     <PageContainer
+      loading={boxLoading}
       title={
         <div>
           <p>{params.repo}</p>

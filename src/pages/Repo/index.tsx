@@ -170,9 +170,9 @@ const Repo = () => {
           <Spin spinning={summarySpinning}>
             <div className={'summary'}>
               <div className={'summary-left'}>
-                {summaryData.gongGeData.map((item) => {
+                {summaryData.gongGeData.map((item,index) => {
                   return (
-                    <div className="item">
+                    <div className="item" key={index}>
                       <span className="label">{item.label}</span>
                       <span className="value">{item.value}</span>
                     </div>
